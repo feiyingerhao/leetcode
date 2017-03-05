@@ -1,7 +1,7 @@
 import org.junit.Test;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by haolidong on 2017/3/4.
@@ -62,22 +62,61 @@ public class SolutionTest {
     }
 
     @Test
-    public void convert(){
+    public void convertTest(){
 //        System.out.println(new Solution().convert("PAYPALISHIRING",3));
         System.out.println(new Solution().convert("AB",1));
     }
 
     @Test
-    public void test(){
-        String str="12323";
-        int index = str.indexOf("1");
-//        str = str.substring(1,3);
-        System.out.println(str);
-        System.out.println(str.charAt(1)==str.charAt(3));
-        char[][] a = new char[2][2];
-        a[1][1]='a';
-        System.out.println(a[1][1]);
+    public void reverseTest(){
+        System.out.println(new Solution().reverse(123));
+        System.out.println(new Solution().reverse(-123));
+        System.out.println(new Solution().reverse(2147483645));
+        System.out.println(new Solution().reverse(0));
+    }
 
+    @Test
+    public void myAtoiTest(){
+//        System.out.println(new Solution().myAtoi("  +002a43"));
+//        System.out.println(new Solution().myAtoi(""));
+//        System.out.println(new Solution().myAtoi("+"));
+//        System.out.println(new Solution().myAtoi("   +0 123"));
+//        System.out.println(new Solution().myAtoi("   -2 123"));
+//        System.out.println(new Solution().myAtoi("   -2123"));
+//        System.out.println(new Solution().myAtoi("   +-2123"));
+        System.out.println(new Solution().myAtoi("2147483647"));
+        System.out.println(new Solution().myAtoi("9223372036854775809"));
+    }
+
+    @Test
+    public void isPalindromeTest(){
+        System.out.println(new Solution().isPalindrome(-12321));
+    }
+
+    @Test
+    public void isMatch(){
+        System.out.println(new Solution().isMatch("aa","a"));
+        System.out.println(new Solution().isMatch("aa","aa"));
+        System.out.println(new Solution().isMatch("aaa","aa"));
+        System.out.println(new Solution().isMatch("aa","a*"));
+        System.out.println(new Solution().isMatch("aa",".*"));
+        System.out.println(new Solution().isMatch("ab",".*"));
+        System.out.println(new Solution().isMatch("aab","c*a*b*"));
+        System.out.println(new Solution().isMatch("aaa","aaaa"));
+        System.out.println(new Solution().isMatch("aaa","a.a"));
+        System.out.println(new Solution().isMatch("aaa","a*a"));
+    }
+
+    @Test
+    public void test(){
+//        Pattern pattern = Pattern.compile("aaaa");
+//        Matcher matcher = pattern.matcher("aaa");
+//        // 字符串是否与正则表达式相匹配
+//        boolean rs = matcher.matches();
+//        System.out.println(rs);
+        String a="123";
+        String b = "a123";
+        System.out.println(b.substring(b.length()-a.length()));
 
     }
 

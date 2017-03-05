@@ -264,4 +264,277 @@ public class Solution {
         }
         return result;
     }
+/**
+ * NO.7
+ * Reverse digits of an integer.
+
+ Example1: x = 123, return 321
+ Example2: x = -123, return -321
+
+ click to show spoilers.
+
+ Note:
+ The input is assumed to be a 32-bit signed integer. Your function should return 0 when the reversed integer overflows.
+
+ Subscribe to see which companies asked this question.
+ * */
+    public int reverse(int x) {
+        int result;
+        long resultlong=0L;
+        while (x!=0){
+            int lastnum = x%10;
+            resultlong = resultlong*10 + lastnum;
+            x = x / 10;
+        }
+        if(resultlong>Integer.MAX_VALUE||resultlong<Integer.MIN_VALUE){
+            result = 0;
+        }else{
+            result = (int)resultlong;
+        }
+        return result;
+    }
+
+/**
+ * Implement atoi to convert a string to an integer.
+
+ Hint: Carefully consider all possible input cases. If you want a challenge, please do not see below and ask yourself what are the possible input cases.
+
+ Notes: It is intended for this problem to be specified vaguely (ie, no given input specs). You are responsible to gather all the input requirements up front.
+
+ Update (2015-02-10):
+ The signature of the C++ function had been updated. If you still see your function signature accepts a const char * argument, please click the reload button  to reset your code definition.
+ * */
+    public int myAtoi(String str) {
+        Map<Character,Integer> map = new HashMap<Character, Integer>();
+        int result=0;
+        int flag=1;
+        int count = 0;
+        str = str.trim();
+        long resultlong = 0L;
+        map.put('0',0);
+        map.put('1',1);
+        map.put('2',2);
+        map.put('3',3);
+        map.put('4',4);
+        map.put('5',5);
+        map.put('6',6);
+        map.put('7',7);
+        map.put('8',8);
+        map.put('9',9);
+        if(str.equals(""))
+            return 0;
+        if(str.charAt(0)=='+'||str.charAt(0)=='-'){
+            if(str.charAt(0)=='-'){
+                flag = -1;
+            }
+            str = str.substring(1);
+        }
+        if(str.equals(""))
+            return 0;
+        for (int i = 0;i < str.length();i++){
+            if(!map.containsKey(str.charAt(i)))
+                break;
+            resultlong = resultlong*10 + map.get(str.charAt(i));
+            if(resultlong*flag>Integer.MAX_VALUE){
+                result = Integer.MAX_VALUE;
+                return result;
+            }else if(resultlong*flag<Integer.MIN_VALUE){
+                result = Integer.MIN_VALUE;
+                return result;
+            }
+
+        }
+        resultlong = resultlong * flag;
+        if(resultlong>Integer.MAX_VALUE){
+            result = Integer.MAX_VALUE;
+        }else if(resultlong<Integer.MIN_VALUE){
+            result = Integer.MIN_VALUE;
+        } else {
+            result = (int)resultlong;
+        }
+        return result;
+    }
+/**
+ * NO.9
+ * Determine whether an integer is a palindrome. Do this without extra space.
+ * */
+    public boolean isPalindrome(int x) {
+        if(x<0)
+            return false;
+        int length = (x+"").length();
+        for (int i = 0;i < length;i++){
+            int high =((int) (x/Math.pow(10,length-i-1)))%10;
+            int low = ((int) (x/Math.pow(10,i)))%10;
+            if(high!=low){
+                return false;
+            }
+        }
+        return true;
+    }
+/**
+ * NO.10.Failure
+ *'.' Matches any single character.
+ '*' Matches zero or more of the preceding element.
+
+ The matching should cover the entire input string (not partial).
+
+ The function prototype should be:
+ bool isMatch(const char *s, const char *p)
+
+ Some examples:
+ isMatch("aa","a") → false
+ isMatch("aa","aa") → true
+ isMatch("aaa","aa") → false
+ isMatch("aa", "a*") → true
+ isMatch("aa", ".*") → true
+ isMatch("ab", ".*") → true
+ isMatch("aab", "c*a*b") → true
+ * */
+public boolean isMatch_Failure(String s, String p) {
+    List<String> pattern = new ArrayList<String>();
+    putIntoArray(p,pattern);
+    int patternIndex = 0;
+    if(s.length()==0&&pattern.size()==0){
+        return true;
+    } else if(s.length()==0&&pattern.size()!=0){
+        return true;
+    } else if(s.length()!=0&&pattern.size()==0){
+        return false;
+    } else{
+        for (int i = 0;i < s.length();){
+            if(patternIndex < pattern.size()){
+                int status = strcompare(""+s.charAt(i),pattern.get(patternIndex));
+                if(status == 1){
+                    i++;
+                } else if(status == 2){
+                    patternIndex++;
+                } else if(status == 3){
+                    i++;
+                    patternIndex++;
+                } else if(status == 4){
+                    return false;
+                }
+            }else{
+                return false;
+            }
+        }
+        while (patternIndex<pattern.size()){
+            String lastpattern = pattern.get(patternIndex);
+            if(lastpattern.contains("*")){
+                patternIndex++;
+                continue;
+            }else{
+                if((pattern.get(patternIndex).charAt(0)==pattern.get(patternIndex-1).charAt(0)||pattern.get(patternIndex-1).charAt(0)=='.')&&pattern.get(patternIndex-1).contains("*")){
+                    patternIndex++;
+                    continue;
+                }else{
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}
+
+    public void putIntoArray(String p,List<String> pattern){
+        for (int i=0;i<p.length();){
+            if(i+1<p.length()){
+                if(p.charAt(i+1)=='*'){
+                    pattern.add(""+p.charAt(i)+p.charAt(i+1));
+                    i=i+2;
+                }else{
+                    pattern.add(""+p.charAt(i));
+                    i=i+1;
+                }
+            } else {
+                pattern.add(""+p.charAt(i));
+                i=i+1;
+            }
+        }
+    }
+//1 表示匹配成功，pattern不需要向后移动，字符向后移动
+//2 表示*匹配失败，pattern向后移动,字符不需要向后移动
+//3 表示匹配成功,pattern需要向后移动，字符需要向后移动
+//4 表示匹配失败，最终结果为false
+    public int strcompare(String pi,String pat){
+        if(pat.contains("*")){
+            if(pat.equals(".*")){
+                return 1;
+            } else {
+                if(pi.equals(pat.charAt(0)+"")){
+                    return 1;
+                }else {
+                    return 2;
+                }
+            }
+        }else{
+            if(pi.equals(pat)){
+                return 3;
+            } else {
+               if(pat.equals(".")){
+                   return 3;
+               } else {
+                   return 4;
+               }
+            }
+        }
+    }
+
+    public boolean singleStrCmp(String s1,String p1){
+        for (int i=0;i<s1.length();i++){
+            if(s1.charAt(i)==p1.charAt(i)||p1.charAt(i)=='.'){
+                continue;
+            }else {
+                return false;
+            }
+        }
+        return true;
+    }
+    /**
+     * NO.10
+     *'.' Matches any single character.
+     '*' Matches zero or more of the preceding element.
+
+     The matching should cover the entire input string (not partial).
+
+     The function prototype should be:
+     bool isMatch(const char *s, const char *p)
+
+     Some examples:
+     isMatch("aa","a") → false
+     isMatch("aa","aa") → true
+     isMatch("aaa","aa") → false
+     isMatch("aa", "a*") → true
+     isMatch("aa", ".*") → true
+     isMatch("ab", ".*") → true
+     isMatch("aab", "c*a*b") → true
+     * */
+    public boolean isMatch(String s, String p) {
+        if (p.length() == 0)
+            return s.length() == 0;
+
+        // length == 1 is the case that is easy to forget.
+        // as p is subtracted 2 each time, so if original
+        // p is odd, then finally it will face the length 1
+        if (p.length() == 1)
+            return (s.length() == 1) && (p.charAt(0) == s.charAt(0) || p.charAt(0) == '.');
+
+        // next char is not '*': must match current character
+        if (p.charAt(1) != '*') {
+            if (s.length() == 0)
+                return false;
+            else
+                return (s.charAt(0) == p.charAt(0) || p.charAt(0) == '.')
+                        && isMatch(s.substring(1), p.substring(1));
+        }else{
+            // next char is *
+            while (s.length() > 0 && (p.charAt(0) == s.charAt(0) || p.charAt(0) == '.')) {
+                if (isMatch(s, p.substring(2)))
+                    return true;
+                s = s.substring(1);
+            }
+            return isMatch(s, p.substring(2));
+        }
+    }
+
 }
