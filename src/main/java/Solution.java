@@ -5,7 +5,7 @@ import java.util.*;
  */
 public class Solution {
     /**
-     * NO.1
+     * NO.1 Two Sum
      * Given an array of integers, return indices of the two numbers such that they add up to a specific target.
 
      You may assume that each input would have exactly one solution, and you may not use the same element twice.
@@ -30,7 +30,7 @@ public class Solution {
     }
 
     /**
-     * NO.2
+     * NO.2 Add Two Numbers
      * You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
 
      You may assume the two numbers do not contain any leading zero, except the number 0 itself.
@@ -89,7 +89,7 @@ public class Solution {
     }
 
 /**
- * NO.3
+ * NO.3 Longest Substring Without Repeating Characters
  * Given a string, find the length of the longest substring without repeating characters.
 
  Examples:
@@ -127,7 +127,7 @@ public class Solution {
     }
 
 /**
- * NO.4
+ * NO.4 Median of Two Sorted Arrays
  * There are two sorted arrays nums1 and nums2 of size m and n respectively.
 
  Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).
@@ -183,7 +183,7 @@ public class Solution {
         return result;
     }
 /**
- * NO.5
+ * NO.5 Longest Palindromic Substring
  * Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000.
 
  Example:
@@ -231,7 +231,7 @@ public class Solution {
         return s.substring(start,start+maxlength);
     }
 /**
- * NO.6
+ * NO.6 ZigZag Conversion
  * The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
 
  P   A   H   N
@@ -265,7 +265,7 @@ public class Solution {
         return result;
     }
 /**
- * NO.7
+ * NO.7 Reverse Integer
  * Reverse digits of an integer.
 
  Example1: x = 123, return 321
@@ -295,6 +295,7 @@ public class Solution {
     }
 
 /**
+ * NO.8 String to Integer (atoi)
  * Implement atoi to convert a string to an integer.
 
  Hint: Carefully consider all possible input cases. If you want a challenge, please do not see below and ask yourself what are the possible input cases.
@@ -355,7 +356,7 @@ public class Solution {
         return result;
     }
 /**
- * NO.9
+ * NO.9 Palindrome Number
  * Determine whether an integer is a palindrome. Do this without extra space.
  * */
     public boolean isPalindrome(int x) {
@@ -372,7 +373,7 @@ public class Solution {
         return true;
     }
 /**
- * NO.10.Failure
+ * NO.10.Failure Regular Expression Matching
  *'.' Matches any single character.
  '*' Matches zero or more of the preceding element.
 
@@ -491,7 +492,7 @@ public boolean isMatch_Failure(String s, String p) {
         return true;
     }
     /**
-     * NO.10
+     * NO.10  From Internet
      *'.' Matches any single character.
      '*' Matches zero or more of the preceding element.
 
@@ -536,5 +537,180 @@ public boolean isMatch_Failure(String s, String p) {
             return isMatch(s, p.substring(2));
         }
     }
+    /**
+     * NO.10.MySelf
+     *'.' Matches any single character.
+     '*' Matches zero or more of the preceding element.
+
+     The matching should cover the entire input string (not partial).
+
+     The function prototype should be:
+     bool isMatch(const char *s, const char *p)
+
+     Some examples:
+     isMatch("aa","a") → false
+     isMatch("aa","aa") → true
+     isMatch("aaa","aa") → false
+     isMatch("aa", "a*") → true
+     isMatch("aa", ".*") → true
+     isMatch("ab", ".*") → true
+     isMatch("aab", "c*a*b") → true
+     * */
+
+    public boolean isMatchNew(String s, String p) {
+        if(s.length()==0){
+            if(p.length()==0)
+                return true;
+            else if(p.length()==1)
+                return false;
+            else {
+                if(p.charAt(1)=='*')
+                    return isMatchNew(s,p.substring(2));
+                else
+                    return false;
+            }
+        }
+        else if(s.length() == 1){
+            if(p.length()==0)
+                return false;
+            else if(p.length()==1)
+                return p.charAt(0)==s.charAt(0)||p.charAt(0)=='.';
+            else{
+                if(p.charAt(1)=='*'){
+                    if(p.charAt(0)==s.charAt(0)||p.charAt(0)=='.'){
+                        if(isMatchNew(s,p.substring(2)))
+                            return true;
+                        else
+                            return isMatchNew(s.substring(1),p);
+                    }else{
+                        return isMatchNew(s,p.substring(2));
+                    }
+                }else {
+                    if(p.charAt(0)==s.charAt(0)||p.charAt(0)=='.')
+                        return isMatchNew(s.substring(1),p.substring(1));
+                    else
+                        return false;
+                }
+            }
+        }
+        else {
+            if(p.length()==0||p.length()==1){
+                return false;
+            } else{
+                if(p.charAt(1)=='*'){
+                    if(s.charAt(0)==p.charAt(0)||p.charAt(0)=='.')
+                        if(isMatchNew(s,p.substring(2)))
+                            return true;
+                        else {
+                            return isMatchNew(s.substring(1),p);
+                        }
+                    else
+                        return isMatchNew(s,p.substring(2));
+                } else {
+                    if(s.charAt(0)==p.charAt(0)||p.charAt(0)=='.')
+                        return isMatchNew(s.substring(1),p.substring(1));
+                    else
+                        return false;
+                }
+            }
+        }
+    }
+/**
+ * NO.11.Failure
+ * Given n non-negative integers a1, a2, ..., an, where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.
+
+ Note: You may not slant the container and n is at least 2.
+
+ Subscribe to see which companies asked this question.
+ * */
+    public int maxArea_f(int[] height) {
+        int area = 0;
+        for (int i = 0;i < height.length-1;i++){
+            for (int j = i+1;j < height.length;j++){
+                area=Math.max(Math.min(height[i],height[j])*(j-i),area);
+            }
+        }
+        return area;
+    }
+/**
+ * NO.11 Container With Most Water
+ * Given n non-negative integers a1, a2, ..., an, where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.
+
+ Note: You may not slant the container and n is at least 2.
+
+ Subscribe to see which companies asked this question.
+ * */
+    public int maxArea(int[] height){
+        int area = 0;
+        int left = 0;
+        int right = height.length-1;
+        boolean flag = true;//flag right或者是right更新的标志
+        while (left < right && flag){
+            area = Math.max(area,Math.min(height[left],height[right])*(right-left));
+            flag = false;
+            if(height[left]<height[right]){
+                for (int i = left+1;i<right;i++){
+                    if(height[i]>height[left]){
+                        left = i;
+                        flag = true;
+                        break;
+                    }
+                }
+            } else {
+                for (int i = right-1;i>left;i--){
+                    if(height[i]>height[right]){
+                        right = i;
+                        flag = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return area;
+    }
+/**
+ * NO.12 Integer to Roman
+ * Given an integer, convert it to a roman numeral.
+
+ Input is guaranteed to be within the range from 1 to 3999.
+
+ Subscribe to see which companies asked this question.[1 4 5 9 10....]
+ M 1000
+ CM 900
+ D 500
+ CD 400
+ C 100
+ XC 90
+ L 50
+ XL 40
+ X 10
+ IX 9
+ V 5
+ IV 4
+ I 1
+ * */
+    public String intToRoman(int num) {
+        String[] charters = {"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
+        int[] nums ={1000,900,500,400,100,90,50,40,10,9,5,4,1};
+        String result = "";
+        for (int i = 0;i < nums.length;i++){
+            while (num>=nums[i]){
+                num -= nums[i];
+                result += charters[i];
+            }
+        }
+        return result;
+    }
+/**
+ * NO.13 Roman to Integer
+ * Given a roman numeral, convert it to an integer.
+
+ Input is guaranteed to be within the range from 1 to 3999.
+
+ Subscribe to see which companies asked this question.
+
+ Show Tags
+ Show Similar Problems
+ * */
 
 }

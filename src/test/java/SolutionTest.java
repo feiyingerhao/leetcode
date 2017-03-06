@@ -104,7 +104,38 @@ public class SolutionTest {
         System.out.println(new Solution().isMatch("aab","c*a*b*"));
         System.out.println(new Solution().isMatch("aaa","aaaa"));
         System.out.println(new Solution().isMatch("aaa","a.a"));
-        System.out.println(new Solution().isMatch("aaa","a*a"));
+        System.out.println(new Solution().isMatch("aabc",".*ab*c"));
+        System.out.println(new Solution().isMatch("ab",".*..c*"));
+        System.out.println(new Solution().isMatch("a",".*..a*"));
+        System.out.println(new Solution().isMatch("aaaaaaaaaaaaab","a*a*c"));
+
+
+        System.out.println("------------------compare----------------");
+        System.out.println(new Solution().isMatchNew("aa","a"));
+        System.out.println(new Solution().isMatchNew("aa","aa"));
+        System.out.println(new Solution().isMatchNew("aaa","aa"));
+        System.out.println(new Solution().isMatchNew("aa","a*"));
+        System.out.println(new Solution().isMatchNew("aa",".*"));
+        System.out.println(new Solution().isMatchNew("ab",".*"));
+        System.out.println(new Solution().isMatchNew("aab","c*a*b*"));
+        System.out.println(new Solution().isMatchNew("aaa","aaaa"));
+        System.out.println(new Solution().isMatchNew("aaa","a.a"));
+        System.out.println(new Solution().isMatchNew("aabc",".*ab*c"));
+        System.out.println(new Solution().isMatchNew("ab",".*..c*"));
+        System.out.println(new Solution().isMatchNew("a",".*..a*"));
+        System.out.println(new Solution().isMatchNew("aaaaaaaaaaaaab","a*a*a*a*a*a*a*a*a*a*a*a*c"));
+
+    }
+
+    @Test
+    public void maxAreaTest(){
+        int[] height = {1,2,3,2,1};
+        System.out.println(new Solution().maxArea(height));
+    }
+
+    @Test
+    public void intToRomanTest(){
+        System.out.println(new Solution().intToRoman(19));
     }
 
     @Test
@@ -119,5 +150,7 @@ public class SolutionTest {
         System.out.println(b.substring(b.length()-a.length()));
 
     }
+
+
 
 }
