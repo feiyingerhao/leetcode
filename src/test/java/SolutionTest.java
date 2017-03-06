@@ -135,9 +135,13 @@ public class SolutionTest {
 
     @Test
     public void intToRomanTest(){
-        System.out.println(new Solution().intToRoman(19));
+        System.out.println(new Solution().intToRoman(2334));
     }
 
+    @Test
+    public void romanToIntTest(){
+        System.out.println(new Solution().romanToInt("CCXXXII"));
+    }
     @Test
     public void test(){
 //        Pattern pattern = Pattern.compile("aaaa");

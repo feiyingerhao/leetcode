@@ -712,5 +712,43 @@ public boolean isMatch_Failure(String s, String p) {
  Show Tags
  Show Similar Problems
  * */
+    public int romanToInt(String s) {
+        String[] charters = {"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
+        int[] nums ={1000,900,500,400,100,90,50,40,10,9,5,4,1};
+        int result = 0;
+        boolean flag = true;
+        for (int i = 0;i < charters.length;i++){
+            flag = true;
+            while (flag){
+                if(charters[i].length()==2){
+                    if(s.length()>=2){
+                        String tmps = s.substring(0,2);
+                        if(tmps.equals(charters[i])){
+                            s=s.substring(2);
+                            result+=nums[i];
+                        }
 
+                        else
+                            flag = false;
+                    } else {
+                            flag=false;
+                    }
+                } else {
+                    if(s.length()>=1){
+                        String tmps = s.substring(0,1);
+                        if(tmps.equals(charters[i])){
+                            s = s.substring(1);
+                            result+=nums[i];
+                        }
+
+                        else
+                            flag = false;
+                    }else{
+                        flag = false;
+                    }
+                }
+            }
+        }
+        return result;
+    }
 }
