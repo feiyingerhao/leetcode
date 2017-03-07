@@ -751,4 +751,536 @@ public boolean isMatch_Failure(String s, String p) {
         }
         return result;
     }
+
+/**
+ * NO.14 Longest Common Prefix
+ Write a function to find the longest common prefix string amongst an array of strings.
+
+ Subscribe to see which companies asked this question.
+ * */
+    public String longestCommonPrefix(String[] strs) {
+        if(strs.length==0)
+            return "";
+        String prefix = strs[0];
+        for (int i = 1;i < strs.length;i++){
+            int j = 0;
+            while (j<prefix.length()&&j<strs[i].length()&&(strs[i].charAt(j) == prefix.charAt(j))){
+                j++;
+            }
+            prefix = prefix.substring(0,j);
+        }
+        return prefix;
+    }
+/**
+ * NO.15 3SUM
+ * Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
+
+ Note: The solution set must not contain duplicate triplets.
+
+ For example, given array S = [-1, 0, 1, 2, -1, -4],
+
+ A solution set is:
+ [
+ [-1, 0, 1],
+ [-1, -1, 2]
+ ]
+ * */
+    public List<List<Integer>> twoSum(int[] nums){
+        if(nums.length<2)
+            return null;
+        List<Integer> li = new ArrayList<Integer>();
+        List<List<Integer>> results = new ArrayList<List<Integer>>();
+        for (int i = 0;i<nums.length;i++){
+            li.add(nums[i]);
+        }
+        Collections.sort(li);
+        int left = 0;
+        int right = li.size()-1;
+        while (left<right){
+            if(li.get(left)+li.get(right)>0){
+                right--;
+            } else if(li.get(left)+li.get(right)<0) {
+                left++;
+            }else{
+                List<Integer> list = new ArrayList<Integer>();
+                list.add(li.get(left));
+                list.add(li.get(right));
+                results.add(list);
+                left++;
+                right--;
+            }
+        }
+        return results;
+    }
+    public List<List<Integer>> threeSum_TimeOut(int[] nums) {
+        List<List<Integer>> results = new ArrayList<List<Integer>>();
+        Set<List<Integer>> set = new HashSet<List<Integer>>();
+        if(nums.length<3)
+            return results;
+        for (int i = 0;i < nums.length;i++){
+            int target = nums[i];
+            List<Integer> li = new ArrayList<Integer>();
+            for (int j = 0;j<nums.length;j++){
+                if(j==i)
+                    continue;
+                li.add(nums[j]);
+            }
+            Collections.sort(li);
+            int left = 0;
+            int right = li.size()-1;
+            while (left<right){
+                if(li.get(left)+li.get(right)+target>0){
+                    right--;
+                } else if(li.get(left)+li.get(right)+target<0) {
+                    left++;
+                }else{
+                    List<Integer> list = new ArrayList<Integer>();
+                    list.add(li.get(left));
+                    list.add(li.get(right));
+                    list.add(target);
+                    Collections.sort(list);
+                    if(!set.contains(list)){
+                        results.add(list);
+                        set.add(list);
+                    }
+                    left++;
+                    right--;
+                }
+            }
+        }
+        return results;
+    }
+    public boolean threeSumExist(List<List<Integer>> results,List<Integer> elements){
+        for (int i = 0;i < results.size();i++){
+            if(
+                    results.get(i).get(0)==elements.get(0)&&
+                            results.get(i).get(1)==elements.get(1)&&
+                            results.get(i).get(2)==elements.get(2)){
+                return true;
+            }else {
+                continue;
+            }
+        }
+        return false;
+    }
+//-1 0 2 3 4
+    public List<List<Integer>> threeSum_fail(int[] nums) {
+        List<List<Integer>> results = new ArrayList<List<Integer>>();
+        List<Integer> li = new ArrayList<Integer>();
+        for (int j = 0;j<nums.length;j++){
+            li.add(nums[j]);
+        }
+        Collections.sort(li);
+        for (int i = 0;i < li.size();i++){
+            while(i > 0 && i < li.size() && li.get(i) == li.get(i-1))
+                i ++;
+            int target = li.get(i);
+            int left = i+1;
+            int right = li.size()-1;
+            while (left<right){
+                if(li.get(left)+li.get(right)+target>0){
+                    right--;
+                    while(left < right &&li.get(right)==li.get(right+1))
+                        right --;
+                } else if(li.get(left)+li.get(right)+target<0) {
+                    left++;
+                    while(left < right && li.get(left)==li.get(left-1))
+                        left ++;
+                }else{
+                    List<Integer> list = new ArrayList<Integer>();
+                    list.add(li.get(left));
+                    list.add(li.get(right));
+                    list.add(target);
+                    Collections.sort(list);
+                    results.add(list);
+                    left++;
+                    right--;
+                    while(left < right && li.get(left)==li.get(left-1))
+                        left ++;
+                    while(left < right &&li.get(right)==li.get(right+1))
+                        right --;
+                }
+            }
+        }
+        return results;
+    }
+//    public List<List<Integer>> threeSum(int[] nums) {
+//        List<List<Integer>> results = new ArrayList<List<Integer>>();
+//        List<Integer> li = new ArrayList<Integer>();
+//        for (int j = 0;j<nums.length;j++){
+//            li.add(nums[j]);
+//        }
+//        Collections.sort(li);
+//        for(int i = 0; i < li.size(); i ++)
+//        {
+//            //srightip same i
+//            while(i > 0 && i < li.size() && li.get(i) == li.get(i-1))
+//                i ++;
+//            int left = i + 1;
+//            int right = li.size() - 1;
+//            while(left < right)
+//            {
+//                int sum =li.get(i) + li.get(left) + li.get(right);
+//                if(sum == 0)
+//                {
+//                    List<Integer> list = new ArrayList<Integer>();
+//                    list.add(li.get(i));
+//                    list.add(li.get(left));
+//                    list.add(li.get(right));
+//                    results.add(li);
+//                    left ++;
+//                    right --;
+//                    //srightip same left
+//                    while(left < right && li.get(left) == li.get(left)-1)
+//                        left ++;
+//                    //srightip same right
+//                    while(right > left && li.get(right) ==li.get(right+1))
+//                        right --;
+//                }
+//                else if(sum < 0)
+//                {
+//                    left ++;
+//                    //srightip same left
+//                    while(left < right && li.get(left) == li.get(left)-1)
+//                        left ++;
+//                }
+//                else
+//                {
+//                    right --;
+//                    while(right > left && li.get(right) ==li.get(right+1))
+//                        right --;
+//                }
+//            }
+//        }
+//        return results;
+//    }
+
+//  li.get(i)==li.get(i-1) 因为是integer的类型，所以要显示转化为int，才能进行比较，否则会报错
+    /**
+    public static Integer valueOf(int i) {
+               assert IntegerCache.high >= 127;
+              if (i >= IntegerCache.low && i <= IntegerCache.high)
+                     return IntegerCache.cache[i + (-IntegerCache.low)];
+               return new Integer(i);
+    }
+     */
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> results = new ArrayList<List<Integer>>();
+        if(nums.length<3)
+            return results;
+        List<Integer> li = new ArrayList<Integer>();
+        for (int j = 0;j<nums.length;j++){
+            li.add(nums[j]);
+        }
+        Collections.sort(li);
+        for (int i = 0;i < li.size()-1;i++){
+            while(i > 0 && i < li.size()-1 && li.get(i).intValue() == li.get(i-1).intValue())
+                i ++;
+            int target = li.get(i).intValue();
+            int left = i+1;
+            int right = li.size()-1;
+            while (left<right){
+                if(li.get(left).intValue()+li.get(right).intValue()+target>0){
+                    right--;
+                    while(left < right &&li.get(right).intValue()==li.get(right+1).intValue())
+                        right --;
+                } else if(li.get(left).intValue()+li.get(right).intValue()+target<0) {
+                    left++;
+                    while(left < right && li.get(left).intValue()==li.get(left-1).intValue())
+                        left ++;
+                }else{
+                    List<Integer> list = new ArrayList<Integer>();
+                    list.add(li.get(left).intValue());
+                    list.add(li.get(right).intValue());
+                    list.add(target);
+                    results.add(list);
+                    left++;
+                    right--;
+                    while(left < right && li.get(left).intValue()==li.get(left-1).intValue())
+                        left ++;
+                    while(left < right &&li.get(right).intValue()==li.get(right+1).intValue())
+                        right --;
+                }
+            }
+        }
+        return results;
+    }
+/**
+ * NO.16 3Sum Closest
+ * Given an array S of n integers, find three integers in S such that the sum is closest to a given number, target. Return the sum of the three integers. You may assume that each input would have exactly one solution.
+
+ For example, given array S = {-1 2 1 -4}, and target = 1.
+
+ The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
+ * */
+    public int threeSumClosest(int[] nums, int target) {
+        int size = nums.length;
+        Arrays.sort(nums);
+        int diff=Integer.MAX_VALUE;
+        int closenum = 0;
+        for (int i = 0;i < size ; i++){
+            while (i>0 && i < size && nums[i]==nums[i-1])
+                i++;
+            int left = i + 1;
+            int right = size - 1;
+            while (left<right){
+                int result = nums[left]+nums[right]+nums[i]-target;
+                if(result>0){
+                    if(result<diff){
+                        diff = result;
+                        closenum = nums[left]+nums[right]+nums[i];
+                    }
+                    right--;
+                    while (left<right&&nums[right]==nums[right+1])
+                        right--;
+                }else if(result<0){
+                    if(Math.abs(result)<diff){
+                        diff = Math.abs(result);
+                        closenum = nums[left]+nums[right]+nums[i];
+                    }
+                    left++;
+                    while (left<right&&nums[left]==nums[left-1])
+                        left++;
+
+                }else {
+                    return target;
+                }
+            }
+
+
+        }
+        return closenum;
+    }
+
+/**
+ * NO.18 4Sum
+ *For example, given array S = [1, 0, -1, 0, -2, 2], and target = 0.
+
+ A solution set is:
+ [
+ [-1,  0, 0, 1],
+ [-2, -1, 1, 2],
+ [-2,  0, 0, 2]
+ ]
+ * */
+    public List<List<Integer>> fourSum_timeout(int[] nums, int target) {
+        List<List<Integer>> results = new ArrayList<List<Integer>>();
+        if(nums.length<4||nums==null)
+            return results;
+        List<Integer> li = new ArrayList<Integer>();
+        for (int j = 0;j<nums.length;j++){
+            li.add(nums[j]);
+        }
+        Collections.sort(li);
+        for (int i = 0;i < li.size()-3;i++){
+            while(i > 0 && i < li.size()-3 && li.get(i).intValue() == li.get(i-1).intValue())
+                i ++;
+            for (int j = i+1;j<li.size()-2;j++){
+                while(j!=i+1 && j < li.size()-2 && li.get(j).intValue() == li.get(j-1).intValue())
+                    j ++;
+                int current_i = li.get(i).intValue();
+                int current_j = li.get(j).intValue();
+                int left = j+1;
+                int right = li.size()-1;
+                while (left<right){
+                    if(li.get(left).intValue()+li.get(right).intValue()+current_i+current_j-target>0){
+                        right--;
+//                        while(left < right &&li.get(right).intValue()==li.get(right+1).intValue())
+//                            right --;
+                    } else if(li.get(left).intValue()+li.get(right).intValue()+current_i+current_j-target<0) {
+                        left++;
+//                        while(left < right && li.get(left).intValue()==li.get(left-1).intValue())
+//                            left ++;
+                    }else{
+                        List<Integer> list = new ArrayList<Integer>();
+                        list.add(li.get(left).intValue());
+                        list.add(li.get(right).intValue());
+                        list.add(current_i);
+                        list.add(current_j);
+                        results.add(list);
+                        left++;
+                        right--;
+                        while(left < right && li.get(left).intValue()==li.get(left-1).intValue())
+                            left ++;
+                        while(left < right &&li.get(right).intValue()==li.get(right+1).intValue())
+                            right --;
+                    }
+                }
+            }
+        }
+        return results;
+    }
+        public List<List<Integer>> fourSum(int[] nums, int target) {
+            Arrays.sort(nums);
+            List<List<Integer>> result = new ArrayList<List<Integer>>();
+            if(nums==null||nums.length<4)
+                return result;
+            for (int i=0;i<nums.length-3;i++){
+                while(i!=0&&i<nums.length-3&&nums[i]==nums[i-1])
+                    i++;
+                for (int j=i+1;j<nums.length-2;j++){
+                    while(j!=i+1&&j<nums.length-2&&nums[j]==nums[j-1])
+                        j++;
+                    int left=j+1;
+                    int right=nums.length-1;
+                    while (left<right){
+                        if(nums[i]+nums[j]+nums[left]+nums[right]>target){
+                            right--;
+
+                        }else if(nums[i]+nums[j]+nums[left]+nums[right]<target){
+                            left++;
+                        //不理解为什么这边加上while以后会有timeout的错误
+                        }else {
+                            List<Integer> li= new ArrayList<Integer>();
+                            li.add(nums[i]);
+                            li.add(nums[j]);
+                            li.add(nums[left]);
+                            li.add(nums[right]);
+                            result.add(li);
+                            left++;
+                            right--;
+                            while (left<right&&nums[left]==nums[left-1])
+                                left++;
+                            while (left<right&&nums[right]==nums[right+1])
+                                right--;
+                        }
+                    }
+
+                }
+            }
+            return result;
+        }
+/**
+ * NO.17 Letter Combinations of a Phone Number
+ * Input:Digit string "23"
+ Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+ Note:
+ Although the above answer is in lexicographical order, your answer could be in any order you want.
+
+ Subscribe to see which companies asked this question.
+ * */
+    public List<String> letterCombinations(String digits) {
+        Map<Character,String> map = new HashMap<Character, String>();
+        map.put('0',"");
+        map.put('1',"");
+        map.put('2',"abc");
+        map.put('3',"def");
+        map.put('4',"ghi");
+        map.put('5',"jkl");
+        map.put('6',"mno");
+        map.put('7',"pqrs");
+        map.put('8',"tuv");
+        map.put('9',"wxyz");
+        List<String> list = new ArrayList<String>();;
+        for (int i = 0;i<digits.length();i++){
+            list = digitCom(list,map.get(digits.charAt(i)));
+        }
+        return list;
+    }
+
+    public List<String> digitCom(List<String> current,String character){
+        List<String> newcom = new ArrayList<String>();
+        if(current==null||current.size()==0){
+            for (int i = 0;i< character.length();i++){
+                newcom.add(""+character.charAt(i));
+            }
+        }else {
+            for (int i = 0;i< character.length();i++){
+                for (int j=0;j<current.size();j++){
+                    newcom.add(current.get(j)+""+character.charAt(i));
+                }
+            }
+        }
+        return newcom;
+    }
+
+/**
+ * NO.19 Remove Nth Node From End of List
+ * Given a linked list, remove the nth node from the end of list and return its head.
+
+ For example,
+
+ Given linked list: 1->2->3->4->5, and n = 2.
+
+ After removing the second node from the end, the linked list becomes 1->2->3->5.
+ Note:
+ Given n will always be valid.
+ Try to do this in one pass.
+
+ Subscribe to see which companies asked this question
+ * */
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode tmp=head;
+        int length = getListNodeLength(head);
+        if(length==0||length==1){
+            return null;
+        }
+//        else if(length==1){
+//            return null;
+//        }
+        else{
+            int pos = length-n;
+            if(pos==0){
+                head= head.next;
+            }else{
+                for (int i = 0;i<pos-1;i++){
+                    if(tmp.next!=null){
+                        tmp=tmp.next;
+                    }else {
+                        return null;
+                    }
+                }
+                tmp.next=tmp.next.next;
+            }
+        }
+        return head;
+    }
+    public int getListNodeLength(ListNode li){
+        ListNode tmp = li;
+        int length=1;
+        if(tmp==null)
+            return 0;
+        while (tmp.next!=null){
+            length++;
+            tmp=tmp.next;
+        }
+        return length;
+    }
+/**
+ * NO.20 Valid Parentheses
+ * Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+
+ The brackets must close in the correct order, "()" and "()[]{}" are all valid but "(]" and "([)]" are not.
+
+ Subscribe to see which companies asked this question.
+ * */
+    public boolean isValid(String s) {
+        Stack<Character> sc = new Stack<Character>();
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '(' || s.charAt(i) == '{' || s.charAt(i) == '[') {
+                sc.push(s.charAt(i));
+            } else if (s.charAt(i) == ')') {
+                if (sc.size()==0||sc.peek() != '(')
+                    return false;
+                else
+                    sc.pop();
+            } else if (s.charAt(i) == '}') {
+                if (sc.size()==0||sc.peek() != '{')
+                    return false;
+                else
+                    sc.pop();
+            } else if (s.charAt(i) == ']') {
+                if (sc.size()==0||sc.peek() != '[')
+                    return false;
+                else
+                    sc.pop();
+            }
+        }
+        if(sc.size()==0){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
 }
