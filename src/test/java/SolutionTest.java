@@ -1,6 +1,7 @@
 import org.junit.Test;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -68,6 +69,27 @@ public class SolutionTest {
     }
 
     @Test
+    public void mergeTwoListsTest(){
+        ListNode ln = null;
+//        ln = addtoList(ln,4);
+//        ln = addtoList(ln,2);
+//        ln = addtoList(ln,1);
+
+        ListNode ln2 = null;
+        ln2 = addtoList(ln2,6);
+        ln2 = addtoList(ln2,3);
+        ln2 = addtoList(ln2,2);
+        ListNode result = new Solution().mergeTwoLists(ln,ln2);
+        int a=0;
+    }
+    @Test
+    public void generateParenthesisTest(){
+        List<String> ls = new Solution().generateParenthesis(3);
+        for (String s:ls){
+            System.out.println(s);
+        }
+    }
+    @Test
     public void test(){
         String str="12323";
         int index = str.indexOf("1");
@@ -77,8 +99,8 @@ public class SolutionTest {
         char[][] a = new char[2][2];
         a[1][1]='a';
         System.out.println(a[1][1]);
-
-
     }
+
+
 
 }

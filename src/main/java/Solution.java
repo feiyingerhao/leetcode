@@ -264,4 +264,84 @@ public class Solution {
         }
         return result;
     }
+/**
+ * NO.21 Merge Two Sorted Lists
+ * Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.
+
+ Subscribe to see which companies asked this question.
+ * */
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        List<Integer> li = new ArrayList<Integer>();
+        while (l1!=null&&l2!=null){
+            if(l1.val<l2.val){
+                li.add(l1.val);
+                l1=l1.next;
+            }else {
+                li.add(l2.val);
+                l2=l2.next;
+            }
+        }
+        while (l1!=null){
+            li.add(l1.val);
+            l1=l1.next;
+        }
+        while (l2!=null){
+            li.add(l2.val);
+            l2=l2.next;
+        }
+        Collections.reverse(li);
+        ListNode ln = null;
+        for (int num:li){
+            ln = addtoList(ln,num);
+        }
+        return ln;
+    }
+/**
+ * NO.22 Generate Parentheses
+ * Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+
+ For example, given n = 3, a solution set is:
+
+ [
+ "((()))",
+ "(()())",
+ "(())()",
+ "()(())",
+ "()()()"
+ ]
+ * */
+    public List<String> generateParenthesis(int n) {
+        List<String> ls = new ArrayList<String>();
+        String s="";
+        generateParenthesisUtil(ls,s,n);
+        return ls;
+    }
+
+    public void generateParenthesisUtil(List<String> ls,String s,int n){
+        int leftspace =  leftSpaceCount(s);
+        if(leftspace==n){
+            for (int i=s.length();i<2*n;i++){
+                s=s+")";
+            }
+            ls.add(s);
+        }else {
+            int rightSpace = s.length()-leftspace;
+            if(rightSpace==leftspace){
+                generateParenthesisUtil(ls,s+"(",n);
+            }else {
+                generateParenthesisUtil(ls,s+"(",n);
+                generateParenthesisUtil(ls,s+")",n);
+            }
+        }
+    }
+
+    public int leftSpaceCount(String s){
+        int count=0;
+        for(int i = 0;i< s.length();i++){
+            if(s.charAt(i)=='(')
+                count++;
+        }
+        return count;
+    }
+
 }
