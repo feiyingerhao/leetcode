@@ -1371,5 +1371,65 @@ public boolean isMatch_Failure(String s, String p) {
         }
         return count;
     }
+/**
+ * NO.23 Merge k Sorted Lists
+ Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
+ Subscribe to see which companies asked this question.
+ * */
+    public ListNode mergeKLists(ListNode[] lists) {
+        if(lists.length==0)
+            return null;
+        else
+            return mergeCur(lists,0,lists.length-1);
+    }
+
+    public ListNode mergeCur(ListNode[] listNodes,int start,int end){
+        if(start==end)
+            return listNodes[start];
+        else if(end-start==1){
+            return mergeTwoLists(listNodes[start],listNodes[end]);
+        }else {
+            int median = (end+start)/2;
+            ListNode l1=mergeCur(listNodes,start,median);
+            ListNode l2=mergeCur(listNodes,median+1,end);
+            return mergeTwoLists(l1,l2);
+        }
+    }
+ /**
+  * NO.24 Swap Nodes in Pairs
+  * Given a linked list, swap every two adjacent nodes and return its head.
+
+  For example,
+  Given 1->2->3->4, you should return the list as 2->1->4->3.
+
+  Your algorithm should use only constant space. You may not modify the values in the list, only nodes itself can be changed.
+
+  Subscribe to see which companies asked this question.
+  * */
+     public ListNode swapPairs(ListNode head) {
+         if(head==null)
+             return null;
+         ListNode pointHead = new ListNode(0);
+         ListNode p = pointHead;
+         pointHead.next = head;
+         int count=0;
+         while (p.next.next!=null){
+             ListNode tmp = p.next.next;
+             p.next.next = tmp.next;
+             tmp.next = p.next;
+             p.next = tmp;
+             if(count++==0){
+                 pointHead.next=p.next;
+             }
+             p = p.next.next;
+             if(p.next==null){
+                 break;
+             }
+         }
+            return pointHead.next;
+     }
+     /**
+      *
+      * */
 
 }

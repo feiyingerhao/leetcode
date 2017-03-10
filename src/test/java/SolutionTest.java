@@ -269,6 +269,36 @@ public class SolutionTest {
         System.out.println(sc.peek());
     }
 
+    @Test
+    public void mergeKListsTest(){
+        ListNode[] lists= new ListNode[6];
+        lists[0] = addtoList(lists[0],1);
+        lists[0] = addtoList(lists[0],0);
+        lists[1] = addtoList(lists[1],1);
+        lists[2] = addtoList(lists[2],2);
+        lists[3] = addtoList(lists[3],3);
+        lists[4] = addtoList(lists[4],4);
+        lists[5] = addtoList(lists[5],6);
+        lists[5] = addtoList(lists[5],5);
+        ListNode result=new Solution().mergeKLists(lists);
+        int a;
+
+    }
+
+
+
+
+    @Test
+    public void swapPairsTest(){
+        ListNode ln = null;
+//        ln = addtoList(ln,4);
+//        ln = addtoList(ln,3);
+//        ln = addtoList(ln,2);
+//        ln = addtoList(ln,1);
+        ListNode result=new Solution().swapPairs(ln);
+        int a=0;
+    }
+
 
 
 }
