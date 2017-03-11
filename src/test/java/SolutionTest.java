@@ -285,8 +285,24 @@ public class SolutionTest {
 
     }
 
+    @Test
+    public void reverseKGroupUtilTest(){
+        ListNode ln = null;
+//        ln = addtoList(ln,5);
+//        ln = addtoList(ln,4);
+//        ln = addtoList(ln,3);
+//        ln = addtoList(ln,2);
+//        ln = addtoList(ln,1);
+        ListNode rsult= new Solution().reverseKGroup(ln,1);
+        int a=0;
+    }
 
 
+    @Test
+    public void removeDuplicatesTest(){
+        int[] nums = {1,1,2,2,3,4,4,5,6,7,8,9,9};
+        System.out.println(new Solution().removeDuplicates(nums));
+    }
 
     @Test
     public void swapPairsTest(){
@@ -299,6 +315,28 @@ public class SolutionTest {
         int a=0;
     }
 
+    @Test
+    public void removeElementTest(){
+        int[] nums={1,1,2,2,3,3,4};
+        new Solution().removeElement(nums,2);
+    }
+
+    @Test
+    public void strStrTest(){
+        System.out.println(new Solution().strStr("asd","sd"));
+        System.out.println(new Solution().strStr("asd",""));
+        System.out.println(new Solution().strStr("","sd"));
+        System.out.println(new Solution().strStr("qwertyu","ert"));
+        System.out.println(new Solution().strStr("qwertyu","qwe"));
+        System.out.println(new Solution().strStr("qwertyu","we"));
+    }
+
+    @Test
+    public void testTest(){
+        String pa="asd";
+        String needle="";
+        System.out.println(pa.indexOf(needle));
+    }
 
 
 }

@@ -1428,8 +1428,153 @@ public boolean isMatch_Failure(String s, String p) {
          }
             return pointHead.next;
      }
-     /**
-      *
-      * */
+ /**
+  *NO.25 Reverse Nodes in k-Group
+  * Given a linked list, reverse the nodes of a linked list k at a time and return its modified list.
 
+  k is a positive integer and is less than or equal to the length of the linked list. If the number of nodes is not a multiple of k then left-out nodes in the end should remain as it is.
+
+  You may not alter the values in the nodes, only nodes itself may be changed.
+
+  Only constant memory is allowed.
+
+  For example,
+  Given this linked list: 1->2->3->4->5
+
+  For k = 2, you should return: 2->1->4->3->5
+
+  For k = 3, you should return: 3->2->1->4->5
+
+  Subscribe to see which companies asked this question.
+  * */
+     public ListNode reverseKGroup(ListNode head, int k) {
+         int len=getListNodeLength(head);
+         int cyc = len/k;
+         ListNode p=head;
+         ListNode headLink=new ListNode(0);
+         ListNode headLinktmp=headLink;
+         for (int i = 0;i < cyc;i++){
+             ListNode partResult=null;
+             ListNode tmpP = p;
+             for (int j = 0;j < k;j++){
+                 partResult=addtoList(partResult,p.val);
+                 p=p.next;
+             }
+             headLink.next=partResult;
+             for (int j = 0;j < k;j++){
+                 headLink = headLink.next;
+             }
+         }
+         if(len%k!=0){
+             headLink.next=p;
+         }
+         return headLinktmp.next;
+    }
+
+    public ListNode reverseKGroupUtil(ListNode p, int k){
+         ListNode ln = new ListNode(0);
+         ListNode partResult = null;
+         ln.next=p;
+         int count=0;
+         for (int i=0;ln.next!=null&&i<k;i++){
+             ln=ln.next;
+             count++;
+         }
+         if(count<k){
+             return p;
+         }else {
+             for (int i = 0;i < k ;i++){
+                 partResult=addtoList(partResult,p.val);
+                 p=p.next;
+                 if(i==0){
+                     partResult.next=ln.next;
+                 }
+             }
+            return partResult;
+         }
+    }
+    /**
+     * NO.26 Remove Duplicates from Sorted Array
+     * Given a sorted array, remove the duplicates in place such that each element appear only once and return the new length.
+
+     Do not allocate extra space for another array, you must do this in place with constant memory.
+
+     For example,
+     Given input array nums = [1,1,2],
+
+     Your function should return length = 2, with the first two elements of nums being 1 and 2 respectively. It doesn't matter what you leave beyond the new length.
+
+     Subscribe to see which companies asked this question.
+     * */
+//    1 2 2 3 3 4 5
+    public int removeDuplicates(int[] nums) {
+        if(nums.length<=1)
+            return nums.length;
+        int len=1;
+        for (int i = 1;i<nums.length;i++){
+            if(nums[i]!=nums[i-1])
+                nums[len++]=nums[i];
+        }
+        return len;
+    }
+    /**
+     * NO.27 Remove Element
+     * Given an array and a value, remove all instances of that value in place and return the new length.
+
+     Do not allocate extra space for another array, you must do this in place with constant memory.
+
+     The order of elements can be changed. It doesn't matter what you leave beyond the new length.
+
+     Example:
+     Given input array nums = [3,2,2,3], val = 3
+
+     Your function should return length = 2, with the first two elements of nums being 2.
+     * */
+    public int removeElement(int[] nums, int val) {
+        int length=0;
+        for(int i=0;i<nums.length;i++){
+            if(nums[i]!=val){
+                nums[length++]=nums[i];
+            }
+        }
+        return length;
+    }
+
+    /**
+     * NO.27 Implement strStr()
+     * Implement strStr().
+
+     Returns the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
+
+     Subscribe to see which companies asked this question.
+     * */
+    public int strStr(String haystack, String needle) {
+        if(needle.length()==0){
+            return 0;
+        }
+        for (int i=0;i<haystack.length();i++){
+            int j = 0;
+            int tmpi=i;
+            for (;j<needle.length();j++){
+                if(needle.charAt(j)==haystack.charAt(tmpi)){
+                    tmpi++;
+                    if(tmpi<haystack.length()){
+                        continue;
+                    }
+                    else{
+                        if((j+1)==needle.length()){
+                            j++;
+                        }
+                        break;
+                    }
+
+                }
+                else
+                    break;
+            }
+            if(j==needle.length())
+                return i;
+        }
+        return -1;
+    }
 }
