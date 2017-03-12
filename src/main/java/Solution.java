@@ -1541,7 +1541,7 @@ public boolean isMatch_Failure(String s, String p) {
     }
 
     /**
-     * NO.27 Implement strStr()
+     * NO.28 Implement strStr()
      * Implement strStr().
 
      Returns the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
@@ -1577,4 +1577,64 @@ public boolean isMatch_Failure(String s, String p) {
         }
         return -1;
     }
+    /**
+     * NO.29 Divide Two Integers
+     * Divide two integers without using multiplication, division and mod operator.
+
+     If it is overflow, return MAX_INT.
+
+     Subscribe to see which companies asked this question.
+     * */
+    public int divide(int dividend, int divisor) {
+        if(divisor==0&&dividend>0)
+            return Integer.MAX_VALUE;
+        if(divisor==0&&dividend<0)
+            return Integer.MIN_VALUE;
+        if(dividend==0)
+            return 0;
+        int flag=1;
+        if( (dividend>0&&divisor<0) || (dividend<0&&divisor>0) ){
+            flag = -1;
+        }
+        long dividendL = dividend;
+        long divisorL = divisor;
+        long dividendLAbs = Math.abs(dividendL);
+        long divisorLAbs=Math.abs(divisorL);
+        long sum=0;
+        while (dividendLAbs>=divisorLAbs){
+            long i=0;
+            long tmp=divisorLAbs;
+            while (dividendLAbs>=tmp){
+                i++;
+                tmp=divisorLAbs<<i;
+            }
+            sum=sum+(1L<<(i-1));
+            dividendLAbs=dividendLAbs-(divisorLAbs<<(i-1));
+        }
+        if(flag<0){
+            sum=-sum;
+        }
+        if(sum>Integer.MAX_VALUE||sum<Integer.MIN_VALUE)
+            sum=Integer.MAX_VALUE;
+        return (int)sum;
+    }
+
+    /**
+     * NO.30. Substring with Concatenation of All Words
+     You are given a string, s, and a list of words, words, that are all of the same length. Find all starting indices of substring(s) in s that is a concatenation of each word in words exactly once and without any intervening characters.
+
+     For example, given:
+     s: "barfoothefoobarman"
+     words: ["foo", "bar"]
+
+     You should return the indices: [0,9].
+     (order does not matter).
+
+     Subscribe to see which companies asked this question.
+     * */
+    public List<Integer> findSubstring(String s, String[] words) {
+
+        return null;
+    }
+
 }

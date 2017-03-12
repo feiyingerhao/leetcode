@@ -332,10 +332,23 @@ public class SolutionTest {
     }
 
     @Test
+    public void divideTest(){
+        System.out.println(new Solution().divide(-39,5));
+        System.out.println(new Solution().divide(39,5));
+        System.out.println(new Solution().divide(-39,-5));
+        System.out.println(new Solution().divide(39,5));
+        System.out.println(new Solution().divide(0,5));
+        System.out.println(new Solution().divide(1,0));
+        System.out.println(new Solution().divide(10,10));
+        System.out.println(new Solution().divide(1,1));
+        System.out.println(new Solution().divide(-2147483648,-1));
+    }
+    @Test
     public void testTest(){
-        String pa="asd";
-        String needle="";
-        System.out.println(pa.indexOf(needle));
+//        String pa="asd";
+//        String needle="";
+        int a=10;
+        System.out.println(a<<2);
     }
 
 
